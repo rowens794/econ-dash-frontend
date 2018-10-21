@@ -64,11 +64,7 @@ class LineChart extends Component {
         //build leading chart data
         if(this.props.data != null){
             leadingPlotData = this.props.data.map(point => {
-                let dateString = Moment(point.date);
-                dateString = dateString.format("M/YY");
-                return {
-                    x: dateString, y: point.leading,
-                }
+                return {x: new Date(point.date), y: point.leading}
             })
             leadingPlotData = leadingPlotData.slice(0,36).reverse();
         }
@@ -76,11 +72,7 @@ class LineChart extends Component {
         //build coincident chart data
         if(this.props.data != null){
             coincidentPlotData = this.props.data.map(point => {
-                let dateString = Moment(point.date);
-                dateString = dateString.format("M/YY");
-                return {
-                    x: dateString, y: point.coincident,
-                }
+                return {x: new Date(point.date), y: point.coincident}
             })
             coincidentPlotData = coincidentPlotData.slice(0,36).reverse();
         }
@@ -88,11 +80,7 @@ class LineChart extends Component {
         //build lagging chart data
         if(this.props.data != null){
             laggingPlotData = this.props.data.map(point => {
-                let dateString = Moment(point.date);
-                dateString = dateString.format("M/YY");
-                return {
-                    x: dateString, y: point.lagging,
-                }
+                return {x: new Date(point.date), y: point.lagging}
             })
             laggingPlotData = laggingPlotData.slice(0,36).reverse();
         }
@@ -104,12 +92,12 @@ class LineChart extends Component {
 
         return (
             <FlexibleXYPlot
-                yDomain={[-15, 15]}
-                xType="ordinal"
+                yDomain={[-2, 2]}
                 height={300}>
                 <HorizontalGridLines />
-                <XAxis tickLabelAngle={-60}/>
-                <LineSeries data={leadingPlotData} color="#388659" opacity={this.state.leadingOpac} strokeStyle={this.state.leadingStrokeStyle}/>
+                <XAxis tickLabelAngle={-30}
+                tickFormat={(d => formatDate(d))}/>
+                <LineSeries tickTotal={5} data={leadingPlotData} color="#388659" opacity={this.state.leadingOpac} strokeStyle={this.state.leadingStrokeStyle}/>
                 <LineSeries data={coincidentPlotData} color="#3F88C5" opacity={this.state.coincidentOpac} strokeStyle={this.state.coincidentStrokeStyle}/>
                 <LineSeries data={laggingPlotData} color="#C6C013" opacity={this.state.laggingOpac} strokeStyle={this.state.laggingStrokeStyle}/>
                 <LineSeries data={midLine} color="#4E4E4E" style={{strokeWidth: 3}}/>
@@ -119,3 +107,9 @@ class LineChart extends Component {
 }
   
   export default LineChart;
+
+function formatDate(date){
+    let newDate = Moment(date);
+    let formattedDate = newDate.format('MMM YY');
+    return formattedDate;
+}   

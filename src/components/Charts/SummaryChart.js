@@ -57,7 +57,7 @@ class PointChart extends Component {
         }
 
         return (
-            <FlexibleXYPlot height={300} yDomain={[-10, 10]} xType="ordinal" xDomain={['lagging', 'coincident', 'leading']} >
+            <FlexibleXYPlot height={300} yDomain={[-2, 2]} xType="ordinal" xDomain={['lagging', 'coincident', 'leading']} >
                 <VerticalGridLines />
                 <HorizontalGridLines />
                 <XAxis />

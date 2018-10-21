@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import Card from '../DataCards/DataCards';
 import axios from 'axios';
 import { Container, Row, Col } from 'reactstrap';
+import Loader from 'react-loader-spinner'
 import LineChart from '../Charts/Chart';
 import PointChart from '../Charts/SummaryChart';
 import Moment from 'moment';
 import Navigation from '../Navigation/Navigation';
 import ChartExplainer from '../Text/ChartExplainer';
-//import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const LEADING_IND = ['AWHMAN','ICSA','ACDGNO','AMTMNO','UNXANO','PERMIT','M1109BUSM293NNBR','T10Y3M']
@@ -60,6 +61,7 @@ class Dashboard extends Component {
     }
     
     render () {
+        
         const leadingIndicators = LEADING_IND.map(indicator => {
             if (this.state.indicators != null){
                 const key = this.state.indicators[indicator].key;
@@ -68,9 +70,9 @@ class Dashboard extends Component {
                 const name = this.state.indicators[indicator].shortName;
                 const value = this.state.indicators[indicator].value;
                 const date = Moment(this.state.indicators[indicator].lastUpdate).format("MMMM Do, YYYY");
-                return  <Card key={key} metric={name} dataPoint={dataPoint} reading={reading} value={value} date={date} />
+                return  <Link to={"/"+key} key={key} style={{ textDecoration: 'none' }}><Card metric={name} dataPoint={dataPoint} reading={reading} value={value} date={date} /></Link>
             }
-            return null
+            return <div className="cardLoader"><Loader type="Puff" color="#E8E8E8" height="20vh" /></div>
         })
 
         const conincidentIndicators = COINCIDENT_IND.map(indicator => {
@@ -81,9 +83,9 @@ class Dashboard extends Component {
                 const name = this.state.indicators[indicator].shortName;
                 const value = this.state.indicators[indicator].value;
                 const date = Moment(this.state.indicators[indicator].lastUpdate).format("MMMM Do, YYYY");
-                return <Card key={key} metric={name} dataPoint={dataPoint} reading={reading} value={value} date={date}/>
+                return  <Link to={"/"+key} key={key} style={{ textDecoration: 'none' }}><Card metric={name} dataPoint={dataPoint} reading={reading} value={value} date={date} /></Link>
             }
-            return null
+            return <div className="cardLoader"><Loader type="Puff" color="#E8E8E8" height="20vh" /></div>
         })
 
         const laggingIndicators = LAGGING_IND.map(indicator => {
@@ -94,9 +96,9 @@ class Dashboard extends Component {
                 const name = this.state.indicators[indicator].shortName;
                 const value = this.state.indicators[indicator].value;
                 const date = Moment(this.state.indicators[indicator].lastUpdate).format("MMMM Do, YYYY");
-                return <Card key={key} metric={name} dataPoint={dataPoint} reading={reading} value={value} date={date}/>
+                return  <Link to={"/"+key} key={key} style={{ textDecoration: 'none' }}><Card metric={name} dataPoint={dataPoint} reading={reading} value={value} date={date} /></Link>
             }
-            return null
+            return <div className="cardLoader"><Loader type="Puff" color="#E8E8E8" height="20vh" /></div>
         })
 
         return(
@@ -113,13 +115,15 @@ class Dashboard extends Component {
                             <Col md="8">
                                 <Row>
                                     <Col>
-                                        <LineChart data={this.state.chartData} active={this.state.activeIndicator}/>
+                                        {this.state.chartData ? <LineChart data={this.state.chartData} active={this.state.activeIndicator}/> : <div className="loader"><Loader type="Puff" color="#E3DBC8" height="20vh" /></div>}
                                     </Col>
                                 </Row>
                             </Col>
                             <Col md="4">
                                 <Row>
-                                    <Col className='d-none d-md-block'><PointChart pcdata={this.state.chartData} active={this.state.activeIndicator}/></Col>
+                                    <Col className='d-none d-md-block'>
+                                        {this.state.chartData ? <PointChart pcdata={this.state.chartData} active={this.state.activeIndicator}/> : <div className="loader"><Loader type="Puff" color="#E3DBC8" height="20vh" /></div>}
+                                    </Col>
                                 </Row>
                             </Col>
                         </Row>
