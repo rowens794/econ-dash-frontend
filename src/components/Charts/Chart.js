@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../../node_modules/react-vis/dist/style.css';
-import {XYPlot, XAxis, HorizontalGridLines, LineSeries, makeVisFlexible } from 'react-vis';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries, makeVisFlexible } from 'react-vis';
 import Moment from 'moment';
 
 
@@ -90,11 +90,14 @@ class LineChart extends Component {
             midLine.push({x: leadingPlotData[i].x, y: 0})
         }
 
+        let WORDS = ['', 'Contracting', '', 'Expanding', ''];
+
         return (
             <FlexibleXYPlot
                 yDomain={[-2, 2]}
                 height={300}>
                 <HorizontalGridLines />
+                <YAxis tickFormat={v => WORDS[v+2]} tickLabelAngle={-90} top={-15}/>
                 <XAxis tickLabelAngle={-30}
                 tickFormat={(d => formatDate(d))}/>
                 <LineSeries tickTotal={5} data={leadingPlotData} color="#388659" opacity={this.state.leadingOpac} strokeStyle={this.state.leadingStrokeStyle}/>

@@ -138,3 +138,32 @@
   padding-top: 50px;
   padding: 0px 20px 0px 20px;
 }
+
+.metricCard{
+  text-align: center;
+  margin: 50px 0px 50px 0px;
+  padding: 0px 20px 0px 20px;
+  color: #4E4E4E;
+}
+
+.metricDataHeadings{
+  text-align: left;
+  color: #4E4E4E;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.metricData{
+  text-align: left;
+  color: #4E4E4E;
+  font-size: 1rem;
+  font-weight: 300;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.footer{
+  margin-bottom: 50px;
+}

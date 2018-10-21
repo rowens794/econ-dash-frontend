@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner'
 import LineChart from '../Charts/MetricChart';
 import Moment from 'moment';
 import Navigation from '../Navigation/Navigation';
+import Footer from '../Footer/Footer';
 import { Link } from "react-router-dom";
 
 
@@ -57,6 +58,41 @@ class MetricPage extends Component {
     
     render () {
 
+        const CARDS = ['ThreeMonthChange', 'OneYearChange', 'ThreeYearChange', 'FiveYearChange']
+        const CARDS_TITLE = ['Three Month Change', 'One Year Change', 'Three Year Change', 'Five Year Change']
+
+        if(this.state.PositiveIndicatorDirection === "positive"){
+
+        }
+
+        const changeCards = CARDS.map((period, i) => {
+            //check if metrics are null - I check ThreeMonth only to see if api has been accessed
+            if (this.state.ThreeMonthChange != null){
+                const key = period;
+                const name = CARDS_TITLE[i];
+                const value = this.state[period];
+                let style = '';
+
+                //color indicators for easy interpretation
+                if(this.state.PositiveIndicatorDirection === "negative"){
+                    if (value > 0) {
+                        style = {'color' : 'green'}
+                    }else{
+                        style = {'color' : 'red'}
+                    }
+                }else{
+                    if (value > 0) {
+                        style = {'color' : 'red'}
+                    }else{
+                        style = {'color' : 'green'}
+                    }
+                }
+                
+                return  <Col md='3' key={key} className="metricCard"><h4>{name}</h4><p style={style} >{value + '%'}</p></Col>
+            }
+            return <Col md='3' className="cardLoader"><Loader type="Puff" color="#E8E8E8" height="20vh" /></Col>
+        })
+
         return(
             <div>
                 <Container fluid={true} className='headerSection'>
@@ -75,9 +111,27 @@ class MetricPage extends Component {
 
                 <Container>
                     <Row>
+                        {changeCards}
+                    </Row>
 
+                    <Row>
+                        <Col md='8'>
+                            <h2>Interpreting This Datapoint</h2><br />
+                            <p>{this.state.FREDDescription}</p>
+                        </Col>
+
+                        <Col md='4'>
+                            <p className='metricDataHeadings'>Full Indicator Name: <span className='metricData'>{this.state.IndicatorName}</span></p><br />
+                            <p className='metricDataHeadings'>FRED Symbol: <span className='metricData'>{this.state.IndicatorSymbol}</span></p><br />
+                            <p className='metricDataHeadings'>Indicator Type: <span className='metricData'>{this.state.IndicatorType}</span></p><br />
+                            <p className='metricDataHeadings'>Units: <span className='metricData'>{this.state.Units}</span></p><br />
+                            <p className='metricDataHeadings'>About This Series (FRED)</p>
+                            <p className='metricData'>{this.state.FREDDescription}</p>
+                        </Col>
                     </Row>
                 </Container>
+
+                <Footer />
             </div>
         )
     }

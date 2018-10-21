@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../../node_modules/react-vis/dist/style.css';
-import {XYPlot, XAxis, HorizontalGridLines, LineSeries, makeVisFlexible } from 'react-vis';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries, makeVisFlexible } from 'react-vis';
 import {timeFormatDefaultLocale} from 'd3-time-format';
 import Moment from 'moment';
 
@@ -34,6 +34,7 @@ class LineChart extends Component {
             <FlexibleXYPlot
                 height={300}>
                 <HorizontalGridLines />
+                <YAxis left={50}/>
                 <XAxis tickLabelAngle={-30}
                 tickFormat={(d => formatDate(d))} />
                 <LineSeries data={dataPoints} color="#388659" opacity={1} strokeStyle={"solid"} tickTotal={5}/>

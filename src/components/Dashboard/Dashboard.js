@@ -8,6 +8,7 @@ import PointChart from '../Charts/SummaryChart';
 import Moment from 'moment';
 import Navigation from '../Navigation/Navigation';
 import ChartExplainer from '../Text/ChartExplainer';
+import Footer from '../Footer/Footer';
 import { Link } from "react-router-dom";
 
 
@@ -154,6 +155,7 @@ class Dashboard extends Component {
                         </Col>
                     </Row>
                 </Container>
+                <Footer />
             </div>
         )
     }

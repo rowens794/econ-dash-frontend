@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../../node_modules/react-vis/dist/style.css';
-import {XYPlot, XAxis, VerticalGridLines,HorizontalGridLines, LineMarkSeries, makeVisFlexible } from 'react-vis';
+import {XYPlot, XAxis, YAxis, VerticalGridLines,HorizontalGridLines, LineMarkSeries, makeVisFlexible } from 'react-vis';
 
 class PointChart extends Component {
     
@@ -56,14 +56,15 @@ class PointChart extends Component {
             }
         }
 
+        let WORDS = ['', 'Contracting', '', 'Expanding', ''];
+
         return (
             <FlexibleXYPlot height={300} yDomain={[-2, 2]} xType="ordinal" xDomain={['lagging', 'coincident', 'leading']} >
                 <VerticalGridLines />
                 <HorizontalGridLines />
                 <XAxis />
-
+                <YAxis tickFormat={v => WORDS[v+2]} tickLabelAngle={-90} top={-15} position='start'/>
                 <LineMarkSeries
-                    className="linemark-series-example"
                     style={{
                         strokeWidth: '0px'
                     }}
@@ -73,7 +74,6 @@ class PointChart extends Component {
                     opacity={this.state.leadingOpac}
                 />
                 <LineMarkSeries
-                    className="linemark-series-example"
                     style={{
                         strokeWidth: '0px'
                     }}
@@ -83,7 +83,6 @@ class PointChart extends Component {
                     opacity={this.state.coincidentOpac}
                 />
                 <LineMarkSeries
-                    className="linemark-series-example"
                     style={{
                         strokeWidth: '0px'
                     }}
@@ -93,7 +92,6 @@ class PointChart extends Component {
                     opacity={this.state.laggingOpac}
                 />
                 <LineMarkSeries
-                    className="linemark-series-example"
                     style={{
                         strokeWidth: '3px'
                     }}
