@@ -72,12 +72,9 @@ class MetricPage extends Component {
                 const key = period;
                 const name = CARDS_TITLE[i];
                 const value = this.state[period];
-                console.log("---------value-----------")
-                console.log(value);
                 let style = '';
 
                 //color indicators for easy interpretation
-                console.log(this.state.PositiveIndicatorDirection);
                 if(this.state.PositiveIndicatorDirection === "negative"){
                     
                     if (value > 0) {
@@ -95,7 +92,7 @@ class MetricPage extends Component {
                 
                 return  <Col md='3' key={key} className="metricCard"><h4>{name}</h4><p style={style} >{value.toFixed(2) + '%'}</p></Col>
             }
-            return <Col md='3' className="cardLoader"><Loader type="Puff" color="#E8E8E8" height="20vh" /></Col>
+            return null
         })
 
         return(
