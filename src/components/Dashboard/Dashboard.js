@@ -12,7 +12,7 @@ import Footer from '../Footer/Footer';
 import { Link } from "react-router-dom";
 
 
-const LEADING_IND = ['AWHMAN','ICSA','ACDGNO','AMTMNO','UNXANO','PERMIT','M1109BUSM293NNBR','T10Y3M']
+const LEADING_IND = ['AWHMAN','ICSA','ACDGNO','AMTMNO','UNXANO','PERMIT','WILL5000INDFC','T10Y3M']
 const COINCIDENT_IND = ['UMCSENT','PAYEMS','DSPIC96','INDPRO','CMRMTSPL']
 const LAGGING_IND = ['UEMPMEAN','ISRATIO','ULCNFB','MPRIME','TOTCI','TDSP']
 
@@ -66,6 +66,7 @@ class Dashboard extends Component {
         const leadingIndicators = LEADING_IND.map(indicator => {
             if (this.state.indicators != null){
                 const key = this.state.indicators[indicator].key;
+                console.log(key);
                 const dataPoint = this.state.indicators[indicator].oneMonthChange;
                 const reading = this.state.indicators[indicator].lastReading;
                 const name = this.state.indicators[indicator].shortName;
@@ -73,7 +74,7 @@ class Dashboard extends Component {
                 const date = Moment(this.state.indicators[indicator].lastUpdate).format("MMMM Do, YYYY");
                 return  <Link to={"/"+key} key={key} style={{ textDecoration: 'none' }}><Card metric={name} dataPoint={dataPoint} reading={reading} value={value} date={date} /></Link>
             }
-            return <div className="cardLoader"><Loader type="Puff" color="#E8E8E8" height="20vh" /></div>
+            return null
         })
 
         const conincidentIndicators = COINCIDENT_IND.map(indicator => {
@@ -86,7 +87,7 @@ class Dashboard extends Component {
                 const date = Moment(this.state.indicators[indicator].lastUpdate).format("MMMM Do, YYYY");
                 return  <Link to={"/"+key} key={key} style={{ textDecoration: 'none' }}><Card metric={name} dataPoint={dataPoint} reading={reading} value={value} date={date} /></Link>
             }
-            return <div className="cardLoader"><Loader type="Puff" color="#E8E8E8" height="20vh" /></div>
+            return null
         })
 
         const laggingIndicators = LAGGING_IND.map(indicator => {
@@ -99,7 +100,7 @@ class Dashboard extends Component {
                 const date = Moment(this.state.indicators[indicator].lastUpdate).format("MMMM Do, YYYY");
                 return  <Link to={"/"+key} key={key} style={{ textDecoration: 'none' }}><Card metric={name} dataPoint={dataPoint} reading={reading} value={value} date={date} /></Link>
             }
-            return <div className="cardLoader"><Loader type="Puff" color="#E8E8E8" height="20vh" /></div>
+            return null
         })
 
         return(

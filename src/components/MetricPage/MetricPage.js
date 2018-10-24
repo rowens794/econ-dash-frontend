@@ -27,7 +27,9 @@ class MetricPage extends Component {
             ThreeMonthChange: null,
             OneYearChange: null,
             ThreeYearChange: null,
-            FiveYearChange: null
+            FiveYearChange: null,
+            Frequency: null,
+            FrequencyShort: null
         }
 
     }
@@ -51,19 +53,18 @@ class MetricPage extends Component {
                 ThreeMonthChange: response.data.ThreeMonthChange,
                 OneYearChange: response.data.OneYearChange,
                 ThreeYearChange: response.data.ThreeYearChange,
-                FiveYearChange: response.data.FiveYearChange
+                FiveYearChange: response.data.FiveYearChange,
+                Frequency: response.data.Frequency,
+                FrequencyShort: response.data.FrequencyShort
             })
         })
+        
     };
     
     render () {
 
-        const CARDS = ['ThreeMonthChange', 'OneYearChange', 'ThreeYearChange', 'FiveYearChange']
-        const CARDS_TITLE = ['Three Month Change', 'One Year Change', 'Three Year Change', 'Five Year Change']
-
-        if(this.state.PositiveIndicatorDirection === "positive"){
-
-        }
+        const CARDS = ['ThreeMonthChange', 'OneYearChange', 'ThreeYearChange', 'FiveYearChange'];
+        const CARDS_TITLE = ['Three Month Change', 'One Year Change', 'Three Year Change', 'Five Year Change'];
 
         const changeCards = CARDS.map((period, i) => {
             //check if metrics are null - I check ThreeMonth only to see if api has been accessed
@@ -71,24 +72,28 @@ class MetricPage extends Component {
                 const key = period;
                 const name = CARDS_TITLE[i];
                 const value = this.state[period];
+                console.log("---------value-----------")
+                console.log(value);
                 let style = '';
 
                 //color indicators for easy interpretation
+                console.log(this.state.PositiveIndicatorDirection);
                 if(this.state.PositiveIndicatorDirection === "negative"){
+                    
                     if (value > 0) {
-                        style = {'color' : 'green'}
-                    }else{
                         style = {'color' : 'red'}
+                    }else{
+                        style = {'color' : 'green'}
                     }
                 }else{
                     if (value > 0) {
-                        style = {'color' : 'red'}
-                    }else{
                         style = {'color' : 'green'}
+                    }else{
+                        style = {'color' : 'red'}
                     }
                 }
                 
-                return  <Col md='3' key={key} className="metricCard"><h4>{name}</h4><p style={style} >{value + '%'}</p></Col>
+                return  <Col md='3' key={key} className="metricCard"><h4>{name}</h4><p style={style} >{value.toFixed(2) + '%'}</p></Col>
             }
             return <Col md='3' className="cardLoader"><Loader type="Puff" color="#E8E8E8" height="20vh" /></Col>
         })
@@ -104,7 +109,7 @@ class MetricPage extends Component {
                         <br />
                         <p className='dateHeading'>{'Last Reading: ' + Moment(this.state.LastUpdated).format("MMMM Do, YYYY")}</p>
                         <br/>
-                        {this.state.ActualsData ? <LineChart data={this.state.ActualsData}/> : <div className="loader"><Loader type="Puff" color="#E3DBC8" height="20vh" /></div>}
+                        {this.state.ActualsData ? <LineChart data={this.state.ActualsData} freq={this.state.FrequencyShort} units={this.state.Units}/> : <div className="loader"><Loader type="Puff" color="#E3DBC8" height="20vh" /></div>}
                     </Container>
 
                 </Container>
@@ -125,8 +130,9 @@ class MetricPage extends Component {
                             <p className='metricDataHeadings'>FRED Symbol: <span className='metricData'>{this.state.IndicatorSymbol}</span></p><br />
                             <p className='metricDataHeadings'>Indicator Type: <span className='metricData'>{this.state.IndicatorType}</span></p><br />
                             <p className='metricDataHeadings'>Units: <span className='metricData'>{this.state.Units}</span></p><br />
-                            <p className='metricDataHeadings'>About This Series (FRED)</p>
-                            <p className='metricData'>{this.state.FREDDescription}</p>
+                            <p className='metricDataHeadings'>Update Frequency: <span className='metricData'>{this.state.Frequency}</span></p><br />
+                            <p className='metricDataHeadings'>Notes About This Series (FRED)</p>
+                            <p className='metricData' style={{'font-size': '.8rem'}}>{this.state.FREDDescription}</p>
                         </Col>
                     </Row>
                 </Container>

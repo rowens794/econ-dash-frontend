@@ -25,9 +25,9 @@ class PointChart extends Component {
             let leading = this.props.pcdata[0].leading;
             let coincident = this.props.pcdata[0].coincident;
             let lagging = this.props.pcdata[0].lagging;
-            dataLagging= [{x: 'lagging', y: lagging, size: 10 }]; 
-            dataCoincident = [{x: 'coincident', y: coincident, size: 10}] 
-            dataLeading = [{x: 'leading', y: leading, size: 10}]
+            dataLagging= [{x: 'lagging', y: parseFloat(lagging), size: 10 }]; 
+            dataCoincident = [{x: 'coincident', y: parseFloat(coincident), size: 10}] 
+            dataLeading = [{x: 'leading', y: parseFloat(leading), size: 10}]
             midLine = [{x: 'lagging', y: 0}, {x: 'coincident', y: 0}, {x: 'leading', y: 0}]
         }
 
