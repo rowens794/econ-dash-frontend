@@ -66,6 +66,14 @@ class MetricPage extends Component {
         const CARDS = ['ThreeMonthChange', 'OneYearChange', 'ThreeYearChange', 'FiveYearChange'];
         const CARDS_TITLE = ['Three Month Change', 'One Year Change', 'Three Year Change', 'Five Year Change'];
 
+        //set last updated title
+        let lastUpdate = "";
+        if (this.state.LastUpdated == null){
+            lastUpdate = "Loading...";
+        }else{
+            lastUpdate = 'Last Reading: ' + Moment(this.state.LastUpdated).format("MMMM Do, YYYY");
+        }
+
         const changeCards = CARDS.map((period, i) => {
             //check if metrics are null - I check ThreeMonth only to see if api has been accessed
             if (this.state.ThreeMonthChange != null){
@@ -104,7 +112,7 @@ class MetricPage extends Component {
                         <br/>
                         <h2 className='dashboardHeading'>{this.state.IndicatorShortName}</h2>
                         <br />
-                        <p className='dateHeading'>{'Last Reading: ' + Moment(this.state.LastUpdated).format("MMMM Do, YYYY")}</p>
+                        <p className='dateHeading'>{lastUpdate}</p>
                         <br/>
                         {this.state.ActualsData ? <LineChart data={this.state.ActualsData} freq={this.state.FrequencyShort} units={this.state.Units}/> : <div className="loader"><Loader type="Puff" color="#E3DBC8" height="20vh" /></div>}
                     </Container>

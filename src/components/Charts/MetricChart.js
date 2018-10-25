@@ -24,17 +24,12 @@ class LineChart extends Component {
             const years = 10;
             let periods = years * 12;
             if (this.props.freq === 'Q'){
-                console.log('quarterly')
                 periods = years * 4;
-            }
-            else if (this.props.freq === 'Y'){
-                console.log('yearly')
+            }else if (this.props.freq === 'Y'){
                 periods = years;
             }else if (this.props.freq === 'W'){
-                console.log('yearly')
                 periods = years * 52;
             }else if (this.props.freq === 'D'){
-                console.log('yearly')
                 periods = years * 365;
             }
 
